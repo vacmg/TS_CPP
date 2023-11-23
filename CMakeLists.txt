@@ -30,3 +30,7 @@ list(LENGTH header_files_list header_files_list_count)
 message(STATUS "[INFO] Found ${header_files_list_count} header files. (${header_files_list})\n")
 
 add_library(TS_CPP TSManager.cpp ${header_files_list} ${source_files_list})
+
+
+# GoogleTest
+add_subdirectory(Tests)
