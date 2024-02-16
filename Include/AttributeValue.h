@@ -52,6 +52,13 @@ public:
     bool operator== (const AttributeValue& other);
 
     /**
+     * The != operator returns true if both AttributeValues have different types or its value is different (either the c string or the integer) or false otherwise
+     * @param other The other AttributeValue used to compare
+     * @return true if both AttributeValues have different types or its value is different (either the c string or the integer) or false otherwise
+     */
+    bool operator!= (const AttributeValue& other);
+
+    /**
      * This function get the value of the attribute
      * The availability of the string pointed by DataUnion is guaranteed until object destruction
      * @return A std::pair with the first parameter being an Enum AttributeType representing the type of the AttributeValue and the second parameter being a DataUnion to either a string or int (check the first parameter to get its actual type)

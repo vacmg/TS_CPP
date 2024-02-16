@@ -50,6 +50,11 @@ bool AttributeValue::operator==(const AttributeValue& other)
     }
 }
 
+bool AttributeValue::operator!= (const AttributeValue& other)
+{
+    return ! (*this == other);
+}
+
 std::pair<AttributeValue::AttributeType, AttributeValue::DataUnion> AttributeValue::getValue()
 {
     return {type,data};
