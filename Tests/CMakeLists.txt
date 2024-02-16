@@ -23,6 +23,9 @@ message(STATUS "[INFO] Found ${test_files_list_count} test files. (${test_files_
 
 add_executable(Google_Tests_run ${test_files_list})
 
+# Mark the test directory to be excluded from all target
+set_property(TARGET Google_Tests_run PROPERTY EXCLUDE_FROM_ALL TRUE)
+
 target_link_libraries(Google_Tests_run TS_CPP)
 
 target_link_libraries(Google_Tests_run gtest gtest_main)
