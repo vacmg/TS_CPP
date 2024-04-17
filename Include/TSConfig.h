@@ -31,19 +31,19 @@ namespace TS_CPP{
 #endif
 
 #if TS_PRINT_MESSAGES_LEVEL == TS_LEVEL_DEBUG
-#define tsdebug(...) {fprintf(stderr,"TS_DEBUG: "); fprintf(stderr, __VA_ARGS__); fprintf(stderr,"\n"); fflush(stderr)}
+#define tsdebug(...) {fprintf(stderr,"TS_DEBUG: "); fprintf(stderr, __VA_ARGS__); fprintf(stderr,"\n"); fflush(stderr);}
 #else
 #define tsdebug(...)
 #endif
 
 #if TS_PRINT_MESSAGES_LEVEL >= TS_LEVEL_INFO
-#define tsinfo(...) {fprintf(stderr,"TS_INFO: "); fprintf(stderr, __VA_ARGS__); fprintf(stderr,"\n"); fflush(stderr)}
+#define tsinfo(...) {fprintf(stderr,"TS_INFO: "); fprintf(stderr, __VA_ARGS__); fprintf(stderr,"\n"); fflush(stderr);}
 #else
 #define tsinfo(...)
 #endif
 
 #if TS_PRINT_MESSAGES_LEVEL >= TS_LEVEL_ERROR
-#define tserror(...) fprintf(stderr,"TS_ERROR:" AT "; "); fprintf(stderr, __VA_ARGS__); fprintf(stderr,"\n"); fflush(stderr)
+#define tserror(...) {fprintf(stderr,"TS_ERROR:" AT "; "); fprintf(stderr, __VA_ARGS__); fprintf(stderr,"\n"); fflush(stderr);}
 #else
 #define tserror(...)
 #endif
