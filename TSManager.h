@@ -84,9 +84,10 @@ public:
     /**
      * This function search and return the entry with the selected identifier no matter in which table is located
      * @param id The identifier of the symbol table
+     * @param tableId The identifier of the table where the entry is located (output parameter, optional)
      * @return A pointer to the Entry referenced by the id or nullptr if it doesn't exist
      */
-    Entry* searchAllTablesForEntryWithId(int id);
+    Entry* searchAllTablesForEntryWithId(int id, int* tableId = nullptr);
 
     /**
      * This function should not be used during normal operation and is intended for advanced users only

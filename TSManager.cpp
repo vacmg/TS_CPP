@@ -106,7 +106,7 @@ TSManager::~TSManager()
     }
 }
 
-Entry *TSManager::searchAllTablesForEntryWithId(int id)
+Entry *TSManager::searchAllTablesForEntryWithId(int id, int *tableId)
 {
     Entry* entry = nullptr;
     for(auto table : symbolTableList)
@@ -114,6 +114,10 @@ Entry *TSManager::searchAllTablesForEntryWithId(int id)
         entry = table->getEntry(id);
         if(entry!= nullptr)
         {
+            if(tableId!= nullptr)
+            {
+                *tableId = table->getId();
+            }
             break;
         }
     }
