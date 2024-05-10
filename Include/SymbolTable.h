@@ -89,6 +89,13 @@ public:
     bool deleteEntry(int entryId);
 
     /**
+     * This function returns the summation of the size of all the entries in the table
+     * It is useful to calculate the size of the activation register of the function represented by this table.
+     * @return the summation of the size of all the entries in the table
+     */
+    int getTableEntriesSize();
+
+    /**
      * This function should not be used during normal operation and is intended for advanced users only
      * This function provides access to the Entries Storage object
      * @return a reference to the Entries Storage object
