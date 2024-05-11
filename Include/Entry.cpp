@@ -35,7 +35,7 @@ AttributeValue* Entry::getAttribute(const std::string& attributeName)
 
 void Entry::setNumericAttribute(const std::string &attributeName, long long value)
 {
-#if TS_PRINT_MESSAGES_LEVEL >= TS_LEVEL_ERROR
+#if TS_PRINT_MESSAGES_LEVEL >= TS_LEVEL_INFO
     if(attributes.find(attributeName) == attributes.end())
     {
         tsinfo("Setting new attribute of entry %d (%s) with name=%s",id,lexeme.c_str(),attributeName.c_str());
