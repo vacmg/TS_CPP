@@ -20,10 +20,14 @@ namespace TS_CPP{
 #define TS_LEVEL_ERROR 1
 #define TS_LEVEL_MUTE 0
 
-// TODO ver si necesito desplazamiento o tamano o los 2
 #ifndef TS_DISPLACEMENT_ATTR_NAME
 /// This macro set the name of the builtin attribute name
-#define TS_DISPLACEMENT_ATTR_NAME
+#define TS_DISPLACEMENT_ATTR_NAME "Despl"
+#endif
+
+#ifndef TS_SIZE_ATTR_NAME
+    /// This macro set the name of the builtin attribute name
+#define TS_SIZE_ATTR_NAME "Size"
 #endif
 
 #ifndef TS_PRINT_MESSAGES_LEVEL

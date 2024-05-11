@@ -9,6 +9,8 @@
 
 namespace TS_CPP{
 
+class SymbolTable;
+
 /**
  * Entry class provides support for each row inside the symbol table
  * It consists of a lexeme, an id and an undefined amount of pairs consisting of attribute name and value (int/string)
@@ -19,10 +21,11 @@ public:
     /**
      * The constructor of an Entry
      * It should not be used directly, but using the method SymbolTable::createNewEntry
+     * @param parentTable The parent table of this entry
      * @param lexeme The lexeme of this entry
      * @param id The unique identifier of the entry
      */
-    Entry(const std::string& lexeme, int id);
+    Entry(SymbolTable* parentTable, const std::string& lexeme, int id);
 
     /**
      * This function retrieves the lexeme of this entry
@@ -51,6 +54,18 @@ public:
      * @param value The value of the attribute to store
      */
     void setNumericAttribute(const std::string& attributeName, long long value);
+
+    /**
+     * This function stores the size of the entry in the parent symbol table
+     * @param size The size of the entry
+     */
+    void setEntrySize(int size);
+
+    /**
+     * This function stores the displacement of the entry in the attribute TS_DISPLACEMENT_ATTR_NAME
+     * @param displacement The displacement of the entry
+     */
+    void _setDisplacement(int displacement);
 
     /**
      * This function stores a new attribute with the desired name and value
@@ -84,6 +99,8 @@ private:
 
     /// The structure used to store all the attributes of the entry
     std::unordered_map<std::string,AttributeValue*> attributes;
+
+    SymbolTable* parentTable;
 };
 
 }

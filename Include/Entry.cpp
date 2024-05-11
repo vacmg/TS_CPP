@@ -1,10 +1,12 @@
 #include "TSConfig.h"
 #include "Entry.h"
+#include "SymbolTable.h"
 
 using namespace TS_CPP;
 
-Entry::Entry(const std::string& lexeme, int id)
+Entry::Entry(SymbolTable* parentTable, const std::string& lexeme, int id)
 {
+    this->parentTable = parentTable;
     this->lexeme = lexeme;
     this->id = id;
 }
@@ -81,4 +83,15 @@ bool Entry::deleteAttribute(const std::string &attributeName)
 std::unordered_map<std::string, AttributeValue*> &Entry::_getAttributesStorage()
 {
     return attributes;
+}
+
+void Entry::_setDisplacement(int displacement)
+{
+    setNumericAttribute(TS_DISPLACEMENT_ATTR_NAME,displacement);
+}
+
+void Entry::setEntrySize(int size)
+{
+    setNumericAttribute(TS_SIZE_ATTR_NAME,size);
+    parentTable->_addTableEntriesSize(size);
 }
