@@ -78,7 +78,7 @@ bool Entry::deleteAttribute(const std::string &attributeName)
     }
 }
 
-std::unordered_map<std::string, AttributeValue*> &Entry::getAttributesStorage()
+std::unordered_map<std::string, AttributeValue*> &Entry::_getAttributesStorage()
 {
     return attributes;
 }

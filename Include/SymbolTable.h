@@ -100,7 +100,7 @@ public:
      * This function provides access to the Entries Storage object
      * @return a reference to the Entries Storage object
      */
-    std::unordered_map<int,Entry*>& getEntriesStorage();
+    std::unordered_map<int,Entry*>& _getEntriesStorage();
 
 
 private:

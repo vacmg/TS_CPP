@@ -94,7 +94,7 @@ public:
      * This function provides access to the Symbol Tables Storage object
      * @return a reference to the Symbol Tables Storage object
      */
-    std::list<SymbolTable*>& getTablesStorage();
+    std::list<SymbolTable*>& _getTablesStorage();
 
 private:
 

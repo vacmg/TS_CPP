@@ -72,7 +72,7 @@ public:
      * This function provides access to the Attribute Storage object
      * @return a reference to the Attribute Storage object
      */
-    std::unordered_map<std::string,AttributeValue*>& getAttributesStorage();
+    std::unordered_map<std::string,AttributeValue*>& _getAttributesStorage();
 
 private:
 

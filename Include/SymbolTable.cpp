@@ -116,7 +116,7 @@ SymbolTable::~SymbolTable()
     }
 }
 
-std::unordered_map<int, Entry *> &SymbolTable::getEntriesStorage()
+std::unordered_map<int, Entry *> &SymbolTable::_getEntriesStorage()
 {
     return table;
 }
