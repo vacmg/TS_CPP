@@ -90,8 +90,13 @@ void Entry::_setDisplacement(int displacement)
     setNumericAttribute(TS_DISPLACEMENT_ATTR_NAME,displacement);
 }
 
-void Entry::setEntrySize(int size)
+void Entry::setSize(int size)
 {
     setNumericAttribute(TS_SIZE_ATTR_NAME,size);
     parentTable->_addTableEntriesSize(size);
+}
+
+long long Entry::getDisplacement()
+{
+    return getAttribute(TS_DISPLACEMENT_ATTR_NAME)->getValue().second.integer;
 }

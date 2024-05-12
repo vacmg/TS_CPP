@@ -133,3 +133,8 @@ std::unordered_map<int, Entry *> &SymbolTable::_getEntriesStorage()
 {
     return table;
 }
+
+int SymbolTable::_getDisplacement() const
+{
+    return displacement;
+}

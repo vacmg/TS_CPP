@@ -104,6 +104,13 @@ public:
 
     /**
      * This function should not be used during normal operation and is intended for advanced users only
+     * This function provides the displacement of the next entry to be added to the table
+     * @return the displacement of the next entry to be added to the table
+     */
+    int _getDisplacement() const;
+
+    /**
+     * This function should not be used during normal operation and is intended for advanced users only
      * This function provides access to the Entries Storage object
      * @return a reference to the Entries Storage object
      */

@@ -48,6 +48,12 @@ public:
     AttributeValue* getAttribute(const std::string& attributeName);
 
     /**
+     * This function retrieves the displacement of the entry.
+     * @return The displacement of the entry
+     */
+    long long getDisplacement();
+
+    /**
      * This function stores a new attribute with the desired name and value
      * If the attribute already exist, it overwrites it
      * @param attributeName The name of the attribute to store
@@ -59,7 +65,7 @@ public:
      * This function stores the size of the entry in the parent symbol table
      * @param size The size of the entry
      */
-    void setEntrySize(int size);
+    void setSize(int size);
 
     /**
      * This function stores the displacement of the entry in the attribute TS_DISPLACEMENT_ATTR_NAME
