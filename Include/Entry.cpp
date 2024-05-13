@@ -1,10 +1,12 @@
 #include "TSConfig.h"
 #include "Entry.h"
+#include "SymbolTable.h"
 
 using namespace TS_CPP;
 
-Entry::Entry(const std::string& lexeme, int id)
+Entry::Entry(SymbolTable* parentTable, const std::string& lexeme, int id)
 {
+    this->parentTable = parentTable;
     this->lexeme = lexeme;
     this->id = id;
 }
@@ -35,7 +37,7 @@ AttributeValue* Entry::getAttribute(const std::string& attributeName)
 
 void Entry::setNumericAttribute(const std::string &attributeName, long long value)
 {
-#if TS_PRINT_MESSAGES_LEVEL >= TS_LEVEL_ERROR
+#if TS_PRINT_MESSAGES_LEVEL >= TS_LEVEL_INFO
     if(attributes.find(attributeName) == attributes.end())
     {
         tsinfo("Setting new attribute of entry %d (%s) with name=%s",id,lexeme.c_str(),attributeName.c_str());
@@ -78,7 +80,23 @@ bool Entry::deleteAttribute(const std::string &attributeName)
     }
 }
 
-std::unordered_map<std::string, AttributeValue*> &Entry::getAttributesStorage()
+std::unordered_map<std::string, AttributeValue*> &Entry::_getAttributesStorage()
 {
     return attributes;
+}
+
+void Entry::_setDisplacement(int displacement)
+{
+    setNumericAttribute(TS_DISPLACEMENT_ATTR_NAME,displacement);
+}
+
+void Entry::setSize(int size)
+{
+    setNumericAttribute(TS_SIZE_ATTR_NAME,size);
+    parentTable->_addTableEntriesSize(size);
+}
+
+long long Entry::getDisplacement()
+{
+    return getAttribute(TS_DISPLACEMENT_ATTR_NAME)->getValue().second.integer;
 }

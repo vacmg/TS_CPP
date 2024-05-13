@@ -19,7 +19,7 @@ bool TSUtils::writeAllTablesToFile(TSManager* tsManager, const std::string& file
     tsdebug("Writing all tables");
 
     bool gotSomeTables = false;
-    for(auto& table: tsManager->getTablesStorage())
+    for(auto& table: tsManager->_getTablesStorage())
     {
         fprintf(file,"\n\n");
         success &= writeTableToFile(table, filePath);
@@ -57,7 +57,7 @@ bool TSUtils::writeTableToFile(SymbolTable* table, const std::string& filePath)
 
     fprintf(file,"CONTENIDO ACTUAL DE LA TABLA %s # %d :\n",table->getTableName().c_str(),table->getId());
     bool gotSomeEntries = false;
-    for(auto& entry: table->getEntriesStorage())
+    for(auto& entry: table->_getEntriesStorage())
     {
         fprintf(file,"---------------------------------------------------\n");
         success &= writeEntryToFile(entry.second, filePath);
@@ -99,14 +99,14 @@ bool TSUtils::writeEntryToFile(Entry* entry, const std::string& filePath)
 
     fprintf(file,"* LEXEMA : '%s' \n",entry->getLexeme().c_str());
 
-    if (entry->getAttributesStorage().empty())
+    if (entry->_getAttributesStorage().empty())
     {
         fprintf(file,"(no se han definido atributos para este lexema)\n");
     }
     else
     {
         fprintf(file,"ATRIBUTOS :\n");
-        for(auto& attribute : entry->getAttributesStorage())
+        for(auto& attribute : entry->_getAttributesStorage())
         {
             success &= writeAttributeToFile(attribute.first,attribute.second,filePath);
         }

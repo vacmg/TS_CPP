@@ -20,6 +20,16 @@ namespace TS_CPP{
 #define TS_LEVEL_ERROR 1
 #define TS_LEVEL_MUTE 0
 
+#ifndef TS_DISPLACEMENT_ATTR_NAME
+/// This macro set the name of the builtin attribute name
+#define TS_DISPLACEMENT_ATTR_NAME "Despl"
+#endif
+
+#ifndef TS_SIZE_ATTR_NAME
+    /// This macro set the name of the builtin attribute name
+#define TS_SIZE_ATTR_NAME "Size"
+#endif
+
 #ifndef TS_PRINT_MESSAGES_LEVEL
 /// This macro set the level of verbosity of the TSManager to one of this values: TS_LEVEL_MUTE, TS_LEVEL_ERROR, TS_LEVEL_INFO, TS_LEVEL_DEBUG
 #define TS_PRINT_MESSAGES_LEVEL TS_LEVEL_ERROR // CHANGE THIS LINE TO SET THE LEVEL OF PRINT MESSAGES

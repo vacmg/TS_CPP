@@ -124,7 +124,7 @@ Entry *TSManager::searchAllTablesForEntryWithId(int id, int *tableId)
     return entry;
 }
 
-::std::list<SymbolTable *> &TSManager::getTablesStorage()
+::std::list<SymbolTable *> &TSManager::_getTablesStorage()
 {
     return symbolTableList;
 }

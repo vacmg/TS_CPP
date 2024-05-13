@@ -33,7 +33,8 @@ Entry* SymbolTable::createNewEntry(const std::string& lexeme)
     {
         int newEntryID = ++(*entryId);
         lexemeToID[lexeme] = newEntryID;
-        auto* entry = new Entry(lexeme, newEntryID);
+        auto* entry = new Entry(this, lexeme, newEntryID);
+        entry->_setDisplacement(displacement);
         table[newEntryID] = entry;
         tsinfo("Created new Entry for table with id=%d (%s) with entryId=%d, lexeme=%s",id,tableName.c_str(),entry->getId(),entry->getLexeme().c_str());
         return entry;
@@ -108,6 +109,18 @@ bool SymbolTable::deleteEntry(const int entryId)
     }
 }
 
+int SymbolTable::getTableEntriesSize()
+{
+    return tableEntriesSize;
+}
+
+void SymbolTable::_addTableEntriesSize(int size)
+{
+    tableEntriesSize += size;
+    displacement += size;
+}
+
+
 SymbolTable::~SymbolTable()
 {
     for(auto entry : table)
@@ -116,7 +129,12 @@ SymbolTable::~SymbolTable()
     }
 }
 
-std::unordered_map<int, Entry *> &SymbolTable::getEntriesStorage()
+std::unordered_map<int, Entry *> &SymbolTable::_getEntriesStorage()
 {
     return table;
+}
+
+int SymbolTable::_getDisplacement() const
+{
+    return displacement;
 }

@@ -89,11 +89,32 @@ public:
     bool deleteEntry(int entryId);
 
     /**
+     * This function returns the summation of the size of all the entries in the table
+     * It is useful to calculate the size of the activation register of the function represented by this table.
+     * @return the summation of the size of all the entries in the table
+     */
+    int getTableEntriesSize();
+
+    /**
+     * This function should not be used during normal operation and is intended for advanced users only
+     * This function adds the provided size to the summation of the size of all the entries in the table and also advances the displacement of the next entry to be added to the table
+     * @param size the size added to the summation of the size of all the entries in the table
+     */
+    void _addTableEntriesSize(int size);
+
+    /**
+     * This function should not be used during normal operation and is intended for advanced users only
+     * This function provides the displacement of the next entry to be added to the table
+     * @return the displacement of the next entry to be added to the table
+     */
+    int _getDisplacement() const;
+
+    /**
      * This function should not be used during normal operation and is intended for advanced users only
      * This function provides access to the Entries Storage object
      * @return a reference to the Entries Storage object
      */
-    std::unordered_map<int,Entry*>& getEntriesStorage();
+    std::unordered_map<int,Entry*>& _getEntriesStorage();
 
 
 private:
@@ -112,6 +133,12 @@ private:
 
     /// Hashmap that enables quick search of entries by name (it maps names to their corresponding id)
     std::unordered_map<std::string,int> lexemeToID;
+
+    /// Displacement of the next entry to be added to the table
+    int displacement = 0;
+
+    /// The summation of the size of all the entries in the table
+    int tableEntriesSize = 0;
 };
 
 }
