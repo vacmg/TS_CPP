@@ -37,7 +37,6 @@ AttributeValue* Entry::getAttribute(const std::string& attributeName)
 
 void Entry::setNumericAttribute(const std::string &attributeName, long long value)
 {
-#if TS_PRINT_MESSAGES_LEVEL >= TS_LEVEL_INFO
     if(attributes.find(attributeName) == attributes.end())
     {
         tsinfo("Setting new attribute of entry %d (%s) with name=%s",id,lexeme.c_str(),attributeName.c_str());
@@ -45,14 +44,14 @@ void Entry::setNumericAttribute(const std::string &attributeName, long long valu
     else
     {
         tsinfo("Attribute of entry %d (%s) with name=%s already exist. Overwriting previous value...",id,lexeme.c_str(),attributeName.c_str());
+        delete attributes[attributeName];
     }
-#endif
+
     attributes[attributeName] = new AttributeValue(value);
 }
 
 void Entry::setStringAttribute(const std::string &attributeName, const char *value)
 {
-#if TS_PRINT_MESSAGES_LEVEL >= TS_LEVEL_INFO
     if(attributes.find(attributeName) == attributes.end())
     {
         tsinfo("Setting new attribute of entry %d (%s) with name=%s & value=%s",id,lexeme.c_str(),attributeName.c_str(),value);
@@ -60,8 +59,9 @@ void Entry::setStringAttribute(const std::string &attributeName, const char *val
     else
     {
         tsinfo("Attribute of entry %d (%s) with name=%s already exist. Overwriting previous value with the new one (%s)",id,lexeme.c_str(),attributeName.c_str(),value);
+        delete attributes[attributeName];
     }
-#endif
+
     attributes[attributeName] = new AttributeValue(value);
 }
 

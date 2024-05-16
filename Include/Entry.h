@@ -40,10 +40,10 @@ public:
     int getId() const;
 
     /**
-     * This function search the attribute with the specified name and returns its value
+     * This function search for the attribute with the specified name and returns its value
      * If the attribute does not exist, it returns a special attribute with attributeType=Null and data.str = nullptr (or data.num = 0)
      * @param attributeName The name of the attribute to search for
-     * @return The value of the attribute if the attribute exist or NoAttribute (a special attribute with attributeType=Null and data.str = nullptr (or data.num = 0)) if it doesn't exist
+     * @return The value of the attribute if the attribute exist or NoAttribute (a special attribute with attributeType=NOATRIB and data.str = nullptr (or data.num = 0)) if it doesn't exist
      */
     AttributeValue* getAttribute(const std::string& attributeName);
 
