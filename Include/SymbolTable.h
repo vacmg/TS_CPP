@@ -110,6 +110,32 @@ public:
     int _getDisplacement() const;
 
     /**
+     * This function search for the attribute with the specified name and returns its value
+     * If the attribute does not exist, it returns a special attribute with attributeType=Null and data.str = nullptr (or data.num = 0)
+     * @param attributeName The name of the attribute to search for
+     * @return The value of the attribute if the attribute exist or NoAttribute (a special attribute with attributeType=NOATRIB and data.str = nullptr (or data.num = 0)) if it doesn't exist
+     */
+    AttributeValue* getAttribute(const std::string& attributeName);
+
+
+    /**
+     * This function stores a new attribute with the desired name and value
+     * If the attribute already exist, it overwrites it
+     * @param attributeName The name of the attribute to store
+     * @param value The value of the attribute to store
+     */
+    void setNumericAttribute(const std::string& attributeName, long long value);
+
+
+    /**
+     * This function stores a new attribute with the desired name and value
+     * If the attribute already exist, it overwrites it
+     * @param attributeName The name of the attribute to store
+     * @param value The value of the attribute to store
+     */
+    void setStringAttribute(const std::string& attributeName, const char* value);
+
+    /**
      * This function should not be used during normal operation and is intended for advanced users only
      * This function provides access to the Entries Storage object
      * @return a reference to the Entries Storage object
@@ -133,6 +159,9 @@ private:
 
     /// Hashmap that enables quick search of entries by name (it maps names to their corresponding id)
     std::unordered_map<std::string,int> lexemeToID;
+
+    /// The structure used to store all the attributes of the SymbolTable
+    std::unordered_map<std::string,AttributeValue*> attributes;
 
     /// Displacement of the next entry to be added to the table
     int displacement = 0;

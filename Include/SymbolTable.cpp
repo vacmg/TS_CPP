@@ -120,6 +120,50 @@ void SymbolTable::_addTableEntriesSize(int size)
     displacement += size;
 }
 
+AttributeValue* SymbolTable::getAttribute(const std::string& attributeName)
+{
+    if(attributes.find(attributeName) == attributes.end())
+    {
+        tsinfo("Attribute of entry %d (%s) with name=%s not found",id,lexeme.c_str(),attributeName.c_str());
+        return nullptr;
+    }
+    else
+    {
+        tsdebug("Attribute of entry %d (%s) with name=%s found",id,lexeme.c_str(),attributeName.c_str());
+        return attributes[attributeName];
+    }
+}
+
+void SymbolTable::setNumericAttribute(const std::string &attributeName, long long value)
+{
+    if(attributes.find(attributeName) == attributes.end())
+    {
+        tsinfo("Setting new attribute of entry %d (%s) with name=%s",id,lexeme.c_str(),attributeName.c_str());
+    }
+    else
+    {
+        tsinfo("Attribute of entry %d (%s) with name=%s already exist. Overwriting previous value...",id,lexeme.c_str(),attributeName.c_str());
+        delete attributes[attributeName];
+    }
+
+    attributes[attributeName] = new AttributeValue(value);
+}
+
+void SymbolTable::setStringAttribute(const std::string &attributeName, const char *value)
+{
+    if(attributes.find(attributeName) == attributes.end())
+    {
+        tsinfo("Setting new attribute of entry %d (%s) with name=%s & value=%s",id,lexeme.c_str(),attributeName.c_str(),value);
+    }
+    else
+    {
+        tsinfo("Attribute of entry %d (%s) with name=%s already exist. Overwriting previous value with the new one (%s)",id,lexeme.c_str(),attributeName.c_str(),value);
+        delete attributes[attributeName];
+    }
+
+    attributes[attributeName] = new AttributeValue(value);
+}
+
 
 SymbolTable::~SymbolTable()
 {
