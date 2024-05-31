@@ -1,6 +1,7 @@
 #ifndef TS_SYMBOLTABLE_H
 #define TS_SYMBOLTABLE_H
 
+#include <vector>
 #include "unordered_map"
 #include "string"
 
@@ -93,7 +94,7 @@ public:
      * It is useful to calculate the size of the activation register of the function represented by this table.
      * @return the summation of the size of all the entries in the table
      */
-    int getTableEntriesSize();
+    int getTableEntriesSize() const;
 
     /**
      * This function should not be used during normal operation and is intended for advanced users only
@@ -140,7 +141,7 @@ public:
      * This function provides access to the Entries Storage object
      * @return a reference to the Entries Storage object
      */
-    std::unordered_map<int,Entry*>& _getEntriesStorage();
+    std::vector<Entry*>& _getEntriesStorage();
 
 
 private:
@@ -154,11 +155,14 @@ private:
     /// Name of the symbol table (can be void (""))
     std::string tableName;
 
-    /// Table storage (Entries are stored in a hashmap due to its faster search time)
-    std::unordered_map<int,Entry*> table;
+    /// Table storage of entries
+    std::vector<Entry*> storage;
 
-    /// Hashmap that enables quick search of entries by name (it maps names to their corresponding id)
-    std::unordered_map<std::string,int> lexemeToID;
+    /// Hashmap that enables quick search of entries by name (it maps names to their corresponding position in the storage vector)
+    std::unordered_map<std::string, int> lexemeToPos;
+
+    /// Hashmap that enables quick search of entries by id (it maps names to their corresponding position in the storage vector)
+    std::unordered_map<int, int> idToPos;
 
     /// The structure used to store all the attributes of the SymbolTable
     std::unordered_map<std::string,AttributeValue*> attributes;
@@ -168,6 +172,8 @@ private:
 
     /// The summation of the size of all the entries in the table
     int tableEntriesSize = 0;
+
+    bool deleteEntryByPos(int pos);
 };
 
 }

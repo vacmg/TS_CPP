@@ -29,19 +29,20 @@ std::string SymbolTable::getTableName() const
 
 Entry* SymbolTable::createNewEntry(const std::string& lexeme)
 {
-    if(lexemeToID.find(lexeme) == lexemeToID.end()) // if entry does not exist
+    if(lexemeToPos.find(lexeme) == lexemeToPos.end()) // if entry does not exist
     {
         int newEntryID = ++(*entryId);
-        lexemeToID[lexeme] = newEntryID;
+        lexemeToPos[lexeme] = (int)storage.size();
+        idToPos[newEntryID] = (int)storage.size();
         auto* entry = new Entry(this, lexeme, newEntryID);
         entry->_setDisplacement(displacement);
-        table[newEntryID] = entry;
+        storage.push_back(entry);
         tsinfo("Created new Entry for table with id=%d (%s) with entryId=%d, lexeme=%s",id,tableName.c_str(),entry->getId(),entry->getLexeme().c_str());
         return entry;
     }
     else // if entry exists
     {
-        Entry* entry = table[lexemeToID[lexeme]];
+        Entry* entry = storage[lexemeToPos[lexeme]];
         tserror("Cannot create Entry; it already exist for table with id=%d (%s) with entryId=%d, lexeme=%s",id,tableName.c_str(),entry->getId(),entry->getLexeme().c_str());
         return entry;
     }
@@ -49,14 +50,14 @@ Entry* SymbolTable::createNewEntry(const std::string& lexeme)
 
 Entry *SymbolTable::getEntry(const int entryId)
 {
-    if(table.find(entryId) == table.end()) // if entry does not exist
+    if(idToPos.find(entryId) == idToPos.end()) // if entry does not exist
     {
         tsinfo("Entry with id=%d does not exist in table with id=%d and name='%s'",entryId, id, tableName.c_str());
         return nullptr;
     }
     else
     {
-        Entry* entry = table[entryId];
+        Entry* entry = storage[idToPos[entryId]];
         tsinfo("Entry with id=%d, lexeme='%s' found in table with id=%d and name='%s'",entry->getId(), entry->getLexeme().c_str(), id, tableName.c_str());
         return entry;
     }
@@ -64,14 +65,14 @@ Entry *SymbolTable::getEntry(const int entryId)
 
 Entry *SymbolTable::searchEntry(const std::string& lexeme)
 {
-    if(lexemeToID.find(lexeme) == lexemeToID.end()) // if entry does not exist
+    if(lexemeToPos.find(lexeme) == lexemeToPos.end()) // if entry does not exist
     {
         tsinfo("Entry with lexeme='%s' does not exist in table with id=%d and name='%s'",lexeme.c_str(), id, tableName.c_str());
         return nullptr;
     }
     else
     {
-        Entry* entry = table[lexemeToID[lexeme]];
+        Entry* entry = storage[lexemeToPos[lexeme]];
         tsinfo("Entry with id=%d, lexeme='%s' found in table with id=%d and name='%s'",entry->getId(), entry->getLexeme().c_str(), id, tableName.c_str());
         return entry;
     }
@@ -79,37 +80,50 @@ Entry *SymbolTable::searchEntry(const std::string& lexeme)
 
 bool SymbolTable::deleteEntry(const std::string& lexeme)
 {
-    if(lexemeToID.find(lexeme) == lexemeToID.end()) // if entry does not exist
+    if(lexemeToPos.find(lexeme) == lexemeToPos.end()) // if entry does not exist
     {
         tserror("Entry with lexeme='%s' does not exist", lexeme.c_str());
         return false;
     }
     else
     {
-        return deleteEntry(lexemeToID[lexeme]);
+        return deleteEntryByPos(lexemeToPos[lexeme]);
     }
 }
 
-bool SymbolTable::deleteEntry(const int entryId)
+bool SymbolTable::deleteEntry(int entryId)
 {
-    if(table.find(entryId) == table.end()) // if entry does not exist
+    if(idToPos.find(entryId) == idToPos.end()) // if entry does not exist
     {
-        tserror("Entry with id=%d does not exist", entryId);
+        tserror("Entry with id='%d' does not exist", entryId);
         return false;
     }
     else
     {
-        Entry* entry = table[entryId];
+        return deleteEntryByPos(idToPos[entryId]);
+    }
+}
+
+bool SymbolTable::deleteEntryByPos(int pos)
+{
+    if(pos < 0 || pos >= storage.size())
+    {
+        return false;
+    }
+    else
+    {
+        Entry* entry = storage[pos];
+        entry->_markAsDeleted();
         const std::string lexeme = entry->getLexeme();
-        table.erase(entryId);
-        lexemeToID.erase(lexeme);
-        delete entry;
-        tsinfo("Entry with id=%d successfully deleted", entryId);
+        int eid = entry->getId();
+        lexemeToPos.erase(lexeme);
+        idToPos.erase(eid);
+        tsinfo("Entry with id=%d and lexeme=%s successfully deleted",eid,lexeme.c_str());
         return true;
     }
 }
 
-int SymbolTable::getTableEntriesSize()
+int SymbolTable::getTableEntriesSize() const
 {
     return tableEntriesSize;
 }
@@ -167,15 +181,15 @@ void SymbolTable::setStringAttribute(const std::string &attributeName, const cha
 
 SymbolTable::~SymbolTable()
 {
-    for(auto entry : table)
+    for(auto entry : storage)
     {
-        delete entry.second;
+        delete entry;
     }
 }
 
-std::unordered_map<int, Entry *> &SymbolTable::_getEntriesStorage()
+std::vector<Entry *> &SymbolTable::_getEntriesStorage()
 {
-    return table;
+    return storage;
 }
 
 int SymbolTable::_getDisplacement() const

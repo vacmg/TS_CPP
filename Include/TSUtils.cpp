@@ -60,7 +60,7 @@ bool TSUtils::writeTableToFile(SymbolTable* table, const std::string& filePath)
     for(auto& entry: table->_getEntriesStorage())
     {
         fprintf(file,"---------------------------------------------------\n");
-        success &= writeEntryToFile(entry.second, filePath);
+        success &= writeEntryToFile(entry, filePath);
         gotSomeEntries = true;
     }
     fprintf(file,"---------------------------------------------------\n");
@@ -79,6 +79,12 @@ bool TSUtils::writeTableToFile(SymbolTable* table, const std::string& filePath)
 
 bool TSUtils::writeEntryToFile(Entry* entry, const std::string& filePath)
 {
+    if(entry->_isDeleted())
+    {
+        tsdebug("Entry is marked as deleted, skipping it",NULL);
+        return true;
+    }
+
     bool success = true;
     bool fileAlreadyOpened = file != nullptr; //file.is_open();
     if(fileAlreadyOpened)

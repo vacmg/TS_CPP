@@ -74,6 +74,19 @@ public:
     void _setDisplacement(int displacement);
 
     /**
+     * This function should not be used during normal operation and is intended for advanced users only
+     * This function marks the entry as deleted
+     */
+    void _markAsDeleted();
+
+    /**
+     * This function should not be used during normal operation and is intended for advanced users only
+     * This function returns true if the entry has been marked as deleted and false otherwise
+     * @return true if the entry has been marked as deleted and false otherwise
+     */
+    bool _isDeleted() const;
+
+    /**
      * This function stores a new attribute with the desired name and value
      * If the attribute already exist, it overwrites it
      * @param attributeName The name of the attribute to store
@@ -89,6 +102,12 @@ public:
     bool deleteAttribute(const std::string& attributeName);
 
     /**
+     * This function returns true if the size of the entry has been set and false otherwise
+     * @return true if the size of the entry has been set and false otherwise
+     */
+    bool getHaveSize() const;
+
+    /**
      * This function should not be used during normal operation and is intended for advanced users only
      * This function provides access to the Attribute Storage object
      * @return a reference to the Attribute Storage object
@@ -99,6 +118,12 @@ private:
 
     /// The unique identifier of the entry (it is unique for each TSManager, even 2 entries from different tables doesn't share their Entry::id)
     int id;
+
+    /// A bolean that indicates if the size of the entry has been set
+    bool haveSize = false;
+
+    /// A boolean that indicates if the entry has been marked as deleted
+    bool isDeleted = false;
 
     /// The lexeme of the entry
     std::string lexeme;

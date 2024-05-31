@@ -9,6 +9,8 @@ Entry::Entry(SymbolTable* parentTable, const std::string& lexeme, int id)
     this->parentTable = parentTable;
     this->lexeme = lexeme;
     this->id = id;
+    this->haveSize = false;
+    this->isDeleted = false;
 }
 
 std::string Entry::getLexeme() const
@@ -94,9 +96,25 @@ void Entry::setSize(int size)
 {
     setNumericAttribute(TS_SIZE_ATTR_NAME,size);
     parentTable->_addTableEntriesSize(size);
+    this->haveSize = true;
 }
 
 long long Entry::getDisplacement()
 {
     return getAttribute(TS_DISPLACEMENT_ATTR_NAME)->getValue().second.integer;
+}
+
+bool Entry::getHaveSize() const
+{
+    return this->haveSize;
+}
+
+void Entry::_markAsDeleted()
+{
+    this->isDeleted = true;
+}
+
+bool Entry::_isDeleted() const
+{
+    return this->isDeleted;
 }
