@@ -98,6 +98,7 @@ bool TSUtils::writeEntryToFile(Entry* entry, const std::string& filePath)
     tsdebug("Writing entry with lexeme=\"%s\" to file \"%s\"",entry->getLexeme().c_str(),filePath.c_str());
 
     fprintf(file,"* LEXEMA : '%s' \n",entry->getLexeme().c_str());
+    fprintf(file,"* ID     : '%d' \n",entry->getId());
 
     if (entry->_getAttributesStorage().empty())
     {
